@@ -1,0 +1,16 @@
+service: ${file(package.json):name}
+provider:
+    name: aws
+    runtime: nodejs14.x
+    profile: ${env:profile}
+    region: us-east-1
+    stage: ${env:stage}
+    # iamRoleStatements: ${file(./serverless/role.yml):iamRoleStatements}
+
+custom:
+    contentBucketName: ${env:stage}-13125381-content
+
+resources:
+    - ${file(./serverless/buckets.yml)}
+    - ${file(./serverless/cloudfront.yml)}
+

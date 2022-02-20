@@ -1,0 +1,48 @@
+Resources:
+    ContentAuthorizer:
+        Type: AWS::CloudFront::Function
+        Properties:
+            AutoPublish: true
+            FunctionCode: ${file(./build/ContentAuthorizer.js).handler}
+            Name: !Sub '${env:stage}-13125381-content-authorizer'
+            FunctionConfig:
+                Comment: Content Authorizer
+                Runtime: cloudfront-js-1.0
+                
+    ContentCFDistribution:
+        Type: AWS::CloudFront::Distribution
+        Properties:
+            DistributionConfig:
+                DefaultCacheBehavior:
+                    AllowedMethods:
+                        - GET
+                        - OPTIONS
+                    TargetOriginId: S3ContentOrigin
+                    CachedMethods:
+                        - GET
+                        - HEAD
+                        - OPTIONS
+                    FunctionAssociations:
+                        - EventType: 'viewer-request'
+                          FunctionArn: !GetAtt ContentAuthorizer.FunctionMetadata.FunctionARN
+                    ViewerProtocolPolicy: 'redirect-to-https'
+                Origins:
+                    - DomainName: ${self:custom.contentBucketName}.s3.amazonaws.com
+                      Id: S3ContentOrigin
+                      S3OriginConfig:
+                          OriginAccessIdentity: !Sub
+                                                  - origin-access-identity/cloudfront/${Identity}
+                                                  - Identity: !Ref ContentAccessIdentity
+                Enabled: true
+                Comment: S3 content origin
+                HttpVersion: http2
+                PriceClass: PriceClass_100
+                ViewerCertificate:
+                    CloudFrontDefaultCertificate: true
+
+    ContentAccessIdentity:
+        Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
+        Properties:
+            CloudFrontOriginAccessIdentityConfig:
+                Comment: 'CloudFront to S3 Access Identity'
+

@@ -1,0 +1,10 @@
+Resources:
+    ContentBucket:
+        Type: AWS::S3::Bucket
+        Properties:
+            BucketName: ${self:custom.contentBucketName}
+            PublicAccessBlockConfiguration:
+                BlockPublicAcls: true
+                BlockPublicPolicy: true
+                IgnorePublicAcls: true
+                RestrictPublicBuckets: true

@@ -1,0 +1,26 @@
+{
+  "name": "cloudfront-functions",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build-deploy": "rm -rf build && npx tsc && npx sls deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/13125381/cloudfront-functions.git"
+  },
+  "author": "Qas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/13125381/cloudfront-functions/issues"
+  },
+  "homepage": "https://github.com/13125381/cloudfront-functions#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1077.0",
+    "serverless": "^3.2.1",
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "@tsconfig/node14": "^1.0.1"
+  }
+}
