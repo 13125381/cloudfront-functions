@@ -1,0 +1,5 @@
+ContentAuthorizer:
+    memorySize: 128
+    timeout: 5
+    handler: .build/ContentAuthorizer.handler
+    role: ContentAuthorizerRole
