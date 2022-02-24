@@ -5,12 +5,25 @@ provider:
     profile: ${env:profile}
     region: us-east-1
     stage: ${env:stage}
-    # iamRoleStatements: ${file(./serverless/role.yml):iamRoleStatements}
 
 custom:
     contentBucketName: ${env:stage}-13125381-content
+    scriptHooks:
+        before:aws:package:finalize:saveServiceState: scripts/completeLambdaAssociation.js
+
+package:
+    patterns:
+        - "!node_modules/**"
+        - "!functions/**"
+
+plugins:
+    - serverless-scriptable-plugin
+
+functions:
+    - ${file(./serverless/functions.yml)}
 
 resources:
+    - ${file(./serverless/role.yml)}
     - ${file(./serverless/buckets.yml)}
     - ${file(./serverless/cloudfront.yml)}
 

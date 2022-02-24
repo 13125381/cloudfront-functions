@@ -1,14 +1,4 @@
-Resources:
-    ContentAuthorizer:
-        Type: AWS::CloudFront::Function
-        Properties:
-            AutoPublish: true
-            FunctionCode: ${file(./build/ContentAuthorizer.js).handler}
-            Name: !Sub '${env:stage}-13125381-content-authorizer'
-            FunctionConfig:
-                Comment: Content Authorizer
-                Runtime: cloudfront-js-1.0
-                
+Resources:             
     ContentCFDistribution:
         Type: AWS::CloudFront::Distribution
         Properties:
@@ -16,15 +6,19 @@ Resources:
                 DefaultCacheBehavior:
                     AllowedMethods:
                         - GET
+                        - HEAD
                         - OPTIONS
                     TargetOriginId: S3ContentOrigin
                     CachedMethods:
                         - GET
                         - HEAD
                         - OPTIONS
-                    FunctionAssociations:
-                        - EventType: 'viewer-request'
-                          FunctionArn: !GetAtt ContentAuthorizer.FunctionMetadata.FunctionARN
+                    OriginRequestPolicyId: 88a5eaf4-2fd4-4709-b370-b4c650ea3fcf
+                    CachePolicyId: b2884449-e4de-46a7-ac36-70bc7f1ddd6d
+                    LambdaFunctionAssociations:
+                        - 
+                            EventType: 'viewer-request'
+                            LambdaFunctionARN: PLACEHOLDER
                     ViewerProtocolPolicy: 'redirect-to-https'
                 Origins:
                     - DomainName: ${self:custom.contentBucketName}.s3.amazonaws.com
