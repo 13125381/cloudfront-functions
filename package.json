@@ -1,27 +1,27 @@
 {
-  "name": "cloudfront-functions",
+  "name": "lambda-at-edge",
   "version": "1.0.0",
-  "description": "",
+  "description": "Lambda @ edge demo",
   "scripts": {
     "build-deploy": "rm -rf .build && npx tsc && npx sls deploy --verbose"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/13125381/cloudfront-functions.git"
+    "url": "git+https://github.com/13125381/lambda-at-edge.git"
   },
   "author": "Qas",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/13125381/cloudfront-functions/issues"
+    "url": "https://github.com/13125381/lambda-at-edge/issues"
   },
-  "homepage": "https://github.com/13125381/cloudfront-functions#readme",
+  "homepage": "https://github.com/13125381/lambda-at-edge#readme",
   "dependencies": {
-    "aws-sdk": "^2.1077.0",
     "serverless": "^3.2.1",
     "typescript": "^4.5.5"
   },
   "devDependencies": {
     "@tsconfig/node14": "^1.0.1",
+    "@types/aws-lambda": "^8.10.92",
     "serverless-scriptable-plugin": "^1.2.2"
   }
 }

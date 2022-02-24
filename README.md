@@ -1,1 +1,1 @@
-# cloudfront-functions
+# lambda-at-edge
